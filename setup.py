@@ -8,7 +8,7 @@ mkfile = lovely.recipe.fs.mkfile:Mkfile
 
 setup (
     name='lovely.recipe',
-    version='0.1dev',
+    version='0.1a1',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
