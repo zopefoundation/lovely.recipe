@@ -2,6 +2,14 @@
 Changes for lovely.recipe
 =========================
 
+
+2007/06/04 0.2.0a1:
+===================
+
+- Recipe for i18nextract and i18nmerge
+- no tests right now because of the complex setup (will come soon)
+
+
 2007/06/04 0.1a1:
 =================
 

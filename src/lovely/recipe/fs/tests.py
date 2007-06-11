@@ -4,6 +4,7 @@ from zope.testing import doctest, renormalizing
 
 def setUp(test):
     testing.buildoutSetUp(test)
+    testing.install_develop('zc.recipe.egg', test)
     testing.install_develop('lovely.recipe', test)
 
 def test_suite():
