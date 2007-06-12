@@ -5,16 +5,17 @@ entry_points = """
 mkdir = lovely.recipe.fs.mkdir:Mkdir
 mkfile = lovely.recipe.fs.mkfile:Mkfile
 i18n = lovely.recipe.i18n.i18n:I18n
+importchecker = lovely.recipe.importchecker.app:ImportChecker
 """
 
 setup (
     name='lovely.recipe',
-    version='0.2.0a1',
+    version='0.3.0a1',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
-    keywords = "buildout recipe filesystem",
-    url = 'svn://svn.zope.org/repos/main/lovely.recipe.fs',
+    keywords = "buildout recipe filesystem i18n importchecker",
+    url = 'svn://svn.zope.org/repos/main/lovely.recipe',
     packages = find_packages('src'),
     include_package_data = True,
     package_dir = {'':'src'},
