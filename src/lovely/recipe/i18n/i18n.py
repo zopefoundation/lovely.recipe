@@ -56,7 +56,7 @@ class I18n(object):
         makers = [m for m in self.options.get('maker', '').split() if m!='']
         for m in makers:
             arguments.extend(['-m', m])
-        zc.buildout.easy_install.scripts(
+        generated = zc.buildout.easy_install.scripts(
             [('i18nextract', 'lovely.recipe.i18n.i18nextract', 'main')],
             ws, self.options['executable'], 'bin',
             extra_paths = [this_loc],
@@ -68,13 +68,14 @@ class I18n(object):
                                         self.options.get('output', 'locales'),
                                        ),
                     ]
-        zc.buildout.easy_install.scripts(
-            [('i18nmergeall', 'lovely.recipe.i18n.i18nmergeall', 'main')],
-            ws, self.options['executable'], 'bin',
-            extra_paths = [this_loc],
-            arguments = arguments,
-            )
+        generated.extend(
+            zc.buildout.easy_install.scripts(
+                [('i18nmergeall', 'lovely.recipe.i18n.i18nmergeall', 'main')],
+                ws, self.options['executable'], 'bin',
+                extra_paths = [this_loc],
+                arguments = arguments,
+            ))
 
-        return ()
+        return generated
 
 

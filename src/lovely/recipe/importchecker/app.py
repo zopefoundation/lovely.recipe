@@ -45,13 +45,11 @@ class ImportChecker(object):
 
         path = self.options.get('path', 'src')
         arguments = ['importchecker', path]
-        zc.buildout.easy_install.scripts(
+        return zc.buildout.easy_install.scripts(
             [('importchecker', 'lovely.recipe.importchecker.importchecker', 'main')],
             ws, self.options['executable'], 'bin',
             extra_paths = [this_loc],
             arguments = arguments,
             )
-
-        return ()
 
 
