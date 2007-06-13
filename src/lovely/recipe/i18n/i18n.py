@@ -52,9 +52,9 @@ class I18n(object):
                      '-p', self.options['location'],
                      '-o', self.options.get('output', 'locales'),
                     ]
-        zcml = self.options('zcml', None)
+        zcml = self.options.get('zcml', None)
         if zcml is not None:
-             arguments.extend(['-s', self.options['zcml'],])
+             arguments.extend(['-s', zcml])
         makers = [m for m in self.options.get('maker', '').split() if m!='']
         for m in makers:
             arguments.extend(['-m', m])
