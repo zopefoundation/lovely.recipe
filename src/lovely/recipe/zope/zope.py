@@ -23,13 +23,11 @@ import zc.buildout
 import zc.recipe.egg
 from zc.zope3recipes.recipes import (Instance,
                                      App,
-                                     ZConfigParse,
-                                     ZConfigSection,
                                      server_types,
                                      event_log2,
                                      this_loc,
                                      site_zcml_template)
-
+from ZConfig.cfgparser import ZConfigParser
 
 class TemplatedInstance:
 
@@ -209,7 +207,7 @@ class LovelyInstance(Instance, TemplatedInstance):
 
     update = install
 
-class LovelyApp(App, TemplatedRecipe):
+class LovelyApp(App, TemplatedInstance):
 
     templatedOptions=['site.zcml']
 

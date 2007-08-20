@@ -6,8 +6,8 @@ mkdir = lovely.recipe.fs.mkdir:Mkdir
 mkfile = lovely.recipe.fs.mkfile:Mkfile
 i18n = lovely.recipe.i18n.i18n:I18n
 importchecker = lovely.recipe.importchecker.app:ImportChecker
-instance = lovely.recipe.zope:LovelyInstance
-app = lovely.recipe.zope:LovelyApp
+instance = lovely.recipe.zope.zope:LovelyInstance
+app = lovely.recipe.zope.zope:LovelyApp
 server = lovely.recipe.zeo:LovelyServer
 """
 
@@ -28,6 +28,7 @@ setup (
                         'zc.recipe.egg',
                         'zc.zope3recipes',
                         'zc.zodbrecipes',
+			'ZConfig'
                         ],
     entry_points = entry_points,
     zip_safe = True,
