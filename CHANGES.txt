@@ -2,6 +2,11 @@
 Changes for lovely.recipe
 =========================
 
+trunk
+========
+
+- recipe for zope instances (instance, app)
+- no tests as well :(
 
 2007/06/04 0.3.0a1:
 ===================
