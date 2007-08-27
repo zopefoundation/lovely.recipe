@@ -21,13 +21,89 @@ import cStringIO
 import os, shutil
 import zc.buildout
 import zc.recipe.egg
+import ZConfig.cfgparser
 from zc.zope3recipes.recipes import (Instance,
                                      App,
                                      server_types,
                                      event_log2,
                                      this_loc,
                                      site_zcml_template)
-from ZConfig.cfgparser import ZConfigParser
+
+# from http://svn.zope.org/zc.zope3recipes/trunk/zc/zope3recipes/recipes.py?rev=76910&r1=75888&r2=76910
+class ZConfigResource:	 
+ 	 
+     def __init__(self, file, url=''):	 
+         self.file, self.url = file, url
+
+# from http://svn.zope.org/zc.zope3recipes/trunk/zc/zope3recipes/recipes.py?rev=76910&r1=75888&r2=76910
+class ZConfigSection(dict):	 
+	 
+     def __init__(self, type='', name='', data=None, sections=None):	 
+         dict.__init__(self)	 
+         if data:	 
+             self.update(data)	 
+         self.sections = sections or []	 
+         self.type, self.name = type, name	 
+ 	 
+     def addValue(self, key, value, *args):	 
+         if key in self:	 
+             self[key].append(value)	 
+         else:	 
+             self[key] = [value]	 
+ 	 
+     def __str__(self, pre=''):	 
+         result = []	 
+         if self.type:	 
+             if self.name:	 
+                 result = ['%s<%s %s>' % (pre, self.type, self.name)]	 
+             else:	 
+                 result = ['%s<%s>' % (pre, self.type)]	 
+             pre += '  '	 
+ 	 
+         for name, values in sorted(self.items()):	 
+             for value in values:	 
+                 result.append('%s%s %s' % (pre, name, value))	 
+ 	 
+         if self.sections and self:	 
+             result.append('')	 
+ 	 
+         for section in self.sections:	 
+             result.append(section.__str__(pre))	 
+ 	 
+         if self.type:	 
+             result.append('%s</%s>' % (pre[:-2], self.type))	 
+             result.append('')	 
+ 	 
+         return '\n'.join(result).rstrip()+'\n'
+
+# from http://svn.zope.org/zc.zope3recipes/trunk/zc/zope3recipes/recipes.py?rev=76910&r1=75888&r2=76910
+class ZConfigContext:	 
+ 	 
+     def __init__(self):	 
+         self.top = ZConfigSection()	 
+         self.sections = []	 
+ 	 
+     def startSection(self, container, type, name):	 
+         newsec = ZConfigSection(type, name)	 
+         container.sections.append(newsec)	 
+         return newsec	 
+ 	 
+     def endSection(self, container, type, name, newsect):	 
+         pass	 
+ 	 
+     def importSchemaComponent(self, pkgname):	 
+         pass	 
+ 	 
+     def includeConfiguration(self, section, newurl, defines):	 
+         raise NotImplementedError('includes are not supported')	 
+ 
+
+# from http://svn.zope.org/zc.zope3recipes/trunk/zc/zope3recipes/recipes.py?rev=76910&r1=75888&r2=76910
+def ZConfigParse(file):	 
+     c = ZConfigContext()	 
+     ZConfig.cfgparser.ZConfigParser(ZConfigResource(file), c).parse(c.top)	 
+     return c.top
+
 
 class TemplatedInstance:
 
