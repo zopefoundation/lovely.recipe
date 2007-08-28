@@ -13,7 +13,7 @@ server = lovely.recipe.zeo:LovelyServer
 
 setup (
     name='lovely.recipe',
-    version='0.3.0a1',
+    version='0.3.1a1',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
