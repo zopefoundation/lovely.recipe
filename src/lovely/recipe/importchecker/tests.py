@@ -30,6 +30,7 @@ def test_suite():
         doctest.DocFileSuite('README.txt',
                              setUp=setUp,
                              tearDown=testing.buildoutTearDown,
+                             optionflags=doctest.ELLIPSIS,
                              checker=renormalizing.RENormalizing([
                                 testing.normalize_path,
                                 testing.normalize_script,

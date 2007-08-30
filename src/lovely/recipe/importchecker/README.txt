@@ -30,11 +30,11 @@ Creating The Tools
     -  importchecker
 
     >>> cat('bin', 'importchecker')
-    #!/opt/local/bin/python
+    #!...
     <BLANKLINE>
     import sys
     sys.path[0:0] = [
-      '/Users/jukart/sandbox/lovely.recipe/src',
+      ...
       ]
     <BLANKLINE>
     import lovely.recipe.importchecker.importchecker
