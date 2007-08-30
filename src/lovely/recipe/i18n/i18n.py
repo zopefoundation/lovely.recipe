@@ -46,15 +46,27 @@ class I18n(object):
 
         requirements, ws = self.egg.working_set()
 
+        package = self.options['package']
+        zcml = self.options.get('zcml', None)
+        if zcml is None:
+            zcml = staticTemplate% package
+        else:
+            zcml = template % zcml
+        partsDir = os.path.join(
+                self.buildout['buildout']['parts-directory'],
+                self.name,
+                )
+        if not os.path.exists(partsDir):
+            os.mkdir(partsDir)
+        zcmlFilename = os.path.join(partsDir, 'configure.zcml')
+        file(zcmlFilename, 'w').write(zcml)
+
         arguments = ['i18nextract',
-                     '-d', self.options.get('domain',
-                                            self.options['package']),
+                     '-d', self.options.get('domain', package),
+                     '-s', zcmlFilename,
                      '-p', self.options['location'],
                      '-o', self.options.get('output', 'locales'),
                     ]
-        zcml = self.options.get('zcml', None)
-        if zcml is not None:
-             arguments.extend(['-s', zcml])
         makers = [m for m in self.options.get('maker', '').split() if m!='']
         for m in makers:
             arguments.extend(['-m', m])
@@ -79,5 +91,21 @@ class I18n(object):
             ))
 
         return generated
+
+
+staticTemplate = """<configure xmlns='http://namespaces.zope.org/zope'>
+  <include package="%s" />
+</configure>
+"""
+
+
+template = """<configure xmlns='http://namespaces.zope.org/zope'
+           xmlns:meta="http://namespaces.zope.org/meta"
+           >
+
+  %s
+
+</configure>
+"""
 
 

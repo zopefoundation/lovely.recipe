@@ -20,15 +20,13 @@ from zc.buildout import testing
 import doctest, unittest
 from zope.testing import doctest, renormalizing
 
-def setUp(test):
-    testing.buildoutSetUp(test)
-    testing.install_develop('zc.recipe.egg', test)
-    testing.install_develop('lovely.recipe', test)
+from lovely.recipe.testing import setUpBuildout
+
 
 def test_suite():
     return unittest.TestSuite((
         doctest.DocFileSuite('README.txt',
-                             setUp=setUp,
+                             setUp=setUpBuildout,
                              tearDown=testing.buildoutTearDown,
                              optionflags=doctest.ELLIPSIS,
                              checker=renormalizing.RENormalizing([

@@ -13,7 +13,6 @@ Creating The Tools
     ... [buildout]
     ... parts = i18n
     ...
-    ... find-links = http://download.zope.org/distribution
     ... offline = true
     ...
     ... [i18n]
@@ -22,7 +21,6 @@ Creating The Tools
     ... domain = recipe
     ... location = src/somewhere
     ... output = locales
-    ... zcml = src/somewhere/configure.zcml
     ... maker = z3c.csvvocabulary.csvStrings
     ... """)
     >>> print system(buildout),
@@ -37,16 +35,106 @@ Creating The Tools
     -  i18nextract
     -  i18nmergeall
 
+
+The i18n Extractor
+------------------
+
     >>> cat('bin', 'i18nextract')
-    #!/opt/local/bin/python
+    #!...
     <BLANKLINE>
     import sys
     sys.path[0:0] = [
-      ,
+    ...
       ]
     <BLANKLINE>
     import lovely.recipe.i18n.i18nextract
     <BLANKLINE>
     if __name__ == '__main__':
-        lovely.recipe.i18n.i18nextract.main()
+        lovely.recipe.i18n.i18nextract.main(['i18nextract', '-d', 'recipe', '-s', '/sample-buildout/parts/i18n/configure.zcml', '-p', 'src/somewhere', '-o', 'locales', '-m', 'z3c.csvvocabulary.csvStrings'])
+
+We have a configure.zcml created.
+
+    >>> cat('parts', 'i18n', 'configure.zcml')
+    <configure xmlns='http://namespaces.zope.org/zope'>
+      <include package="lovely.recipe" />
+    </configure>
+
+
+i18n Merge
+----------
+
+    >>> cat('bin', 'i18nmergeall')
+    #!...
+    <BLANKLINE>
+    import sys
+    sys.path[0:0] = [
+    ...
+      ]
+    <BLANKLINE>
+    import lovely.recipe.i18n.i18nmergeall
+    <BLANKLINE>
+    if __name__ == '__main__':
+        lovely.recipe.i18n.i18nmergeall.main(['i18nmergeall', '-l', 'src/somewhere/locales'])
+
+
+Adding a custom configure.zcml
+------------------------------
+
+The created configure.zcml includes the package an assumes that the package
+contains a configure.zcml. If this is not the case or if additional package
+includes are needed then the zcml parameter can be used to define the content
+of the generated configure.zcml.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = i18n
+    ...
+    ... offline = true
+    ...
+    ... [i18n]
+    ... recipe = lovely.recipe:i18n
+    ... package = lovely.recipe
+    ... domain = recipe
+    ... location = src/somewhere
+    ... output = locales
+    ... maker = z3c.csvvocabulary.csvStrings
+    ... zcml =
+    ...    <include package='zope.component' file='meta.zcml' />
+    ...    <include package='lovely.recipe' />
+    ...
+    ... """)
+
+    >>> print system(buildout),
+    Uninstalling i18n.
+    Installing i18n.
+    i18n: setting up i18n tools
+    Generated script 'bin/i18nextract'.
+    Generated script 'bin/i18nmergeall'.
+
+    >>> cat('bin', 'i18nextract')
+    #!...
+    <BLANKLINE>
+    import sys
+    sys.path[0:0] = [
+    ...
+      ]
+    <BLANKLINE>
+    import lovely.recipe.i18n.i18nextract
+    <BLANKLINE>
+    if __name__ == '__main__':
+        lovely.recipe.i18n.i18nextract.main(['i18nextract', '-d', 'recipe', '-s', '/sample-buildout/parts/i18n/configure.zcml', '-p', 'src/somewhere', '-o', 'locales', '-m', 'z3c.csvvocabulary.csvStrings'])
+
+And the generated configure-zcml contains our extra code.
+
+    >>> cat('parts', 'i18n', 'configure.zcml')
+    <configure xmlns='http://namespaces.zope.org/zope'
+               xmlns:meta="http://namespaces.zope.org/meta"
+               >
+    <BLANKLINE>
+    <BLANKLINE>
+    <include package='zope.component' file='meta.zcml' />
+    <include package='lovely.recipe' />
+    <BLANKLINE>
+    </configure>
 

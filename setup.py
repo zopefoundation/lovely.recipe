@@ -23,6 +23,7 @@ setup (
     install_requires = ['setuptools',
                         'zc.buildout',
                         'zc.recipe.egg',
+                        'zope.app.locales',
                         ],
     entry_points = entry_points,
     zip_safe = True,
