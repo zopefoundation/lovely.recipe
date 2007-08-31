@@ -5,11 +5,26 @@ Changes for lovely.recipe
 After
 =====
 
+BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
+          to show for what this all is for.
+
+
+2007/08/31 0.3.0a3:
+===================
+
+- merge from lovely-instance branch
+
 - i18nextract allows the definition of a custem configure.zcml which is needed
   to be able to use it with package who do not contain a full configuration
   setup.
 
 - fix tests to run not only on jukart's mac
+
+
+2007/06/04 0.3.0a2:
+===================
+
+- recipe for zope instances (instance, app); no tests as well :(
 
 
 2007/06/04 0.3.0a1:

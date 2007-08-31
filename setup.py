@@ -6,11 +6,14 @@ mkdir = lovely.recipe.fs.mkdir:Mkdir
 mkfile = lovely.recipe.fs.mkfile:Mkfile
 i18n = lovely.recipe.i18n.i18n:I18n
 importchecker = lovely.recipe.importchecker.app:ImportChecker
+instance = lovely.recipe.zope.zope:LovelyInstance
+app = lovely.recipe.zope.zope:LovelyApp
+server = lovely.recipe.zeo:LovelyServer
 """
 
 setup (
     name='lovely.recipe',
-    version='0.3.0a1',
+    version='0.3.0a3',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
@@ -24,6 +27,9 @@ setup (
                         'zc.buildout',
                         'zc.recipe.egg',
                         'zope.app.locales',
+                        'zc.zope3recipes',
+                        'zc.zodbrecipes',
+                        'ZConfig'
                         ],
     entry_points = entry_points,
     zip_safe = True,
