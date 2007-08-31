@@ -9,7 +9,7 @@ BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show for what this all is for.
 
 
-2007/08/31 0.3.0a3:
+2007/08/31 0.3.1a2:
 ===================
 
 - merge from lovely-instance branch
