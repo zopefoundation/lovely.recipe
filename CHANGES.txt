@@ -9,6 +9,13 @@ BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show for what this all is for.
 
 
+2007/08/31 0.3.1a3:
+===================
+
+- generated script names are created from the section name to allow more than
+  just one extractor in one buildout.
+
+
 2007/08/31 0.3.1a2:
 ===================
 

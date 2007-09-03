@@ -77,6 +77,36 @@ i18n Merge
         lovely.recipe.i18n.i18nmergeall.main(['i18nmergeall', '-l', 'src/somewhere/locales'])
 
 
+Tool Names
+----------
+
+The created tools are named after the section name. If the section for the
+recipe is named 'translation' then the tools are named 'translationextract'
+and 'translationmergeall'.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = translation
+    ...
+    ... offline = true
+    ...
+    ... [translation]
+    ... recipe = lovely.recipe:i18n
+    ... package = lovely.recipe
+    ... domain = recipe
+    ... location = src/somewhere
+    ... output = locales
+    ... maker = z3c.csvvocabulary.csvStrings
+    ... """)
+    >>> print system(buildout),
+    Uninstalling i18n.
+    Installing translation.
+    translation: setting up i18n tools
+    Generated script 'bin/translationextract'.
+    Generated script 'bin/translationmergeall'.
+
+
 Adding a custom configure.zcml
 ------------------------------
 
@@ -106,7 +136,7 @@ of the generated configure.zcml.
     ... """)
 
     >>> print system(buildout),
-    Uninstalling i18n.
+    Uninstalling translation.
     Installing i18n.
     i18n: setting up i18n tools
     Generated script 'bin/i18nextract'.
