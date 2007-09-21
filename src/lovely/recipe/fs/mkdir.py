@@ -23,6 +23,8 @@ class Mkdir:
             logging.getLogger(self.name).info(
                 'Creating directory %s', os.path.basename(path))
             os.mkdir(path)
-        return path
+        return ()
 
+    def update(self):
+        pass
 

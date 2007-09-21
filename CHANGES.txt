@@ -8,6 +8,11 @@ After
 BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show for what this all is for.
 
+2007/09/21 0.3.1b1:
+===================
+
+- mkdir makes sure directories are never deleted
+
 
 2007/08/31 0.3.1a3:
 ===================
