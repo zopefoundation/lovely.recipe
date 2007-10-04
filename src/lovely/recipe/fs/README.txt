@@ -9,6 +9,7 @@ Creating Directories
     ... """
     ... [buildout]
     ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
     ...
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
@@ -33,6 +34,7 @@ If we change the directory name the old directory ('mystuff') is not deleted.
     ... """
     ... [buildout]
     ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
     ...
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
