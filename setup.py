@@ -24,15 +24,13 @@ setup (
     package_dir = {'':'src'},
     namespace_packages = ['lovely', 'lovely.recipe'],
     
-    extras_require = dict(i18n=['zope.app.locales',]),
+    extras_require = dict(i18n=['zope.app.locales',],
+                          zope=['zc.zope3recipes', 'ZConfig'],
+                          zeo=['zc.zodbrecipes']),
                                                 
-                                
     install_requires = ['setuptools',
                         'zc.buildout',
                         'zc.recipe.egg',
-                        'zc.zope3recipes',
-                        'zc.zodbrecipes',
-                        'ZConfig',
                         ],
     entry_points = entry_points,
     zip_safe = True,
