@@ -13,7 +13,7 @@ server = lovely.recipe.zeo:LovelyServer
 
 setup (
     name='lovely.recipe',
-    version='0.3.1b1',
+    version='0.4.0b1',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
@@ -23,13 +23,16 @@ setup (
     include_package_data = True,
     package_dir = {'':'src'},
     namespace_packages = ['lovely', 'lovely.recipe'],
+    
+    extras_require = dict(i18n=['zope.app.locales',]),
+                                                
+                                
     install_requires = ['setuptools',
                         'zc.buildout',
                         'zc.recipe.egg',
-                        'zope.app.locales',
                         'zc.zope3recipes',
                         'zc.zodbrecipes',
-                        'ZConfig'
+                        'ZConfig',
                         ],
     entry_points = entry_points,
     zip_safe = True,
