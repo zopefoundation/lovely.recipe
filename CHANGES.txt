@@ -8,6 +8,24 @@ After
 BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show for what this all is for.
 
+- using extras_require to filter dependencies installed by setuptools
+  on recipe level.
+  
+  The following extras install dependencies for the following entry points:
+  
+  * [i18n]: i18n = lovely.recipe.i18n.i18n:I18n
+  * [zope]: instance = lovely.recipe.zope.zope:LovelyInstance
+            app = lovely.recipe.zope.zope:LovelyApp
+  * [zeo]:  server = lovely.recipe.zeo:LovelyServer
+
+  Dependencies for all the other recipes are installed by default.
+  
+  To use this branch you need to change your setup.py to use this
+  specific spelling:
+  
+  install_requires = ['lovely.recipe[<extra>]', ...]
+
+
 2007/09/21 0.3.1b1:
 ===================
 
