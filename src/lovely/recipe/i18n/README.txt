@@ -12,7 +12,7 @@ Creating The Tools
     ... """
     ... [buildout]
     ... parts = i18n
-    ...
+    ... index = http://download.zope.org/zope3.4
     ... offline = true
     ...
     ... [i18n]
@@ -28,12 +28,14 @@ Creating The Tools
     i18n: setting up i18n tools
     Generated script 'bin/i18nextract'.
     Generated script 'bin/i18nmergeall'.
+    Generated script 'bin/i18nstats'.
 
     >>> import os
     >>> ls(os.path.join(sample_buildout, 'bin'))
     -  buildout
     -  i18nextract
     -  i18nmergeall
+    -  i18nstats
 
 
 The i18n Extractor
@@ -76,6 +78,22 @@ i18n Merge
     if __name__ == '__main__':
         lovely.recipe.i18n.i18nmergeall.main(['i18nmergeall', '-l', 'src/somewhere/locales'])
 
+i18n Stats
+----------
+
+    >>> cat('bin', 'i18nstats')
+    #!...
+    <BLANKLINE>
+    import sys
+    sys.path[0:0] = [
+    ...
+      ]
+    <BLANKLINE>
+    import lovely.recipe.i18n.i18nstats
+    <BLANKLINE>
+    if __name__ == '__main__':
+        lovely.recipe.i18n.i18nstats.main(['i18nstats', '-l', 'src/somewhere/locales'])
+
 
 Tool Names
 ----------
@@ -87,6 +105,7 @@ and 'translationmergeall'.
     >>> write(sample_buildout, 'buildout.cfg',
     ... """
     ... [buildout]
+    ... index = http://download.zope.org/zope3.4
     ... parts = translation
     ...
     ... offline = true
@@ -105,6 +124,7 @@ and 'translationmergeall'.
     translation: setting up i18n tools
     Generated script 'bin/translationextract'.
     Generated script 'bin/translationmergeall'.
+    Generated script 'bin/translationstats'.
 
 
 Adding a custom configure.zcml
@@ -141,6 +161,7 @@ of the generated configure.zcml.
     i18n: setting up i18n tools
     Generated script 'bin/i18nextract'.
     Generated script 'bin/i18nmergeall'.
+    Generated script 'bin/i18nstats'.
 
     >>> cat('bin', 'i18nextract')
     #!...

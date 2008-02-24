@@ -61,6 +61,8 @@ class I18n(object):
         zcmlFilename = os.path.join(partsDir, 'configure.zcml')
         file(zcmlFilename, 'w').write(zcml)
 
+        # Generate i18nextract
+
         arguments = ['%sextract'% self.name,
                      '-d', self.options.get('domain', package),
                      '-s', zcmlFilename,
@@ -70,12 +72,15 @@ class I18n(object):
         makers = [m for m in self.options.get('maker', '').split() if m!='']
         for m in makers:
             arguments.extend(['-m', m])
+
         generated = zc.buildout.easy_install.scripts(
             [('%sextract'% self.name, 'lovely.recipe.i18n.i18nextract', 'main')],
             ws, self.options['executable'], 'bin',
             extra_paths = [this_loc],
             arguments = arguments,
             )
+
+        # Generate i18nmergeall
 
         arguments = ['%smergeall'% self.name,
                      '-l', os.path.join(self.options['location'],
@@ -86,6 +91,23 @@ class I18n(object):
             zc.buildout.easy_install.scripts(
                 [('%smergeall'% self.name,
                   'lovely.recipe.i18n.i18nmergeall',
+                  'main')],
+                ws, self.options['executable'], 'bin',
+                extra_paths = [this_loc],
+                arguments = arguments,
+            ))
+
+        # Generate i18nstats
+
+        arguments = ['%sstats'% self.name,
+                     '-l', os.path.join(self.options['location'],
+                                        self.options.get('output', 'locales'),
+                                       ),
+                    ]
+        generated.extend(
+            zc.buildout.easy_install.scripts(
+                [('%sstats'% self.name,
+                  'lovely.recipe.i18n.i18nstats',
                   'main')],
                 ws, self.options['executable'], 'bin',
                 extra_paths = [this_loc],
