@@ -26,12 +26,14 @@ from lovely.recipe.testing import setUpBuildout
 def test_suite():
 
     return unittest.TestSuite((
-        doctest.DocFileSuite('README.txt',
-                             setUp=setUpBuildout,
-                             tearDown=testing.buildoutTearDown,
-                             checker=renormalizing.RENormalizing([
+        doctest.DocFileSuite(
+            'README.txt',
+            setUp=setUpBuildout,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            tearDown=testing.buildoutTearDown,
+            checker=renormalizing.RENormalizing([
                                     testing.normalize_path,
                                     testing.normalize_script,
                                     testing.normalize_egg_py])
-                             )))
+            )))
 

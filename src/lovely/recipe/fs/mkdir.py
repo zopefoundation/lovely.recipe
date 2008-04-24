@@ -7,11 +7,15 @@ class Mkdir:
         self.buildout = buildout
         self.name = name
         self.options = options
+        self.originalPath = options['path']
         options['path'] = os.path.join(
                               buildout['buildout']['directory'],
-                              options['path'],
+                              self.originalPath,
                               )
-        if not os.path.isdir(os.path.dirname(options['path'])):
+        self.createPath = options.get('createpath', 'False').lower() in ['true', 'on', '1']
+        if (    not self.createPath
+            and not os.path.isdir(os.path.dirname(options['path']))
+           ):
             logging.getLogger(self.name).error(
                 'Cannot create %s. %s is not a directory.',
                 options['path'], os.path.dirname(options['path']))
@@ -21,8 +25,8 @@ class Mkdir:
         path = self.options['path']
         if not os.path.isdir(path):
             logging.getLogger(self.name).info(
-                'Creating directory %s', os.path.basename(path))
-            os.mkdir(path)
+                'Creating directory %s', self.originalPath)
+            os.makedirs(path)
         return ()
 
     def update(self):

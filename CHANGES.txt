@@ -8,6 +8,11 @@ After
 BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show for what this all is for.
 
+2008/04/24 0.3.1b3:
+===================
+
+- added option "createpath" to mkfile and mkdir recipe
+
 2008/02/24 0.3.1b2:
 ===================
 

@@ -55,6 +55,54 @@ If we change the directory name the old directory ('mystuff') is not deleted.
     d  otherdir
     d  parts
 
+We can also create a full path.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
+    ...
+    ... [data-dir]
+    ... recipe = lovely.recipe:mkdir
+    ... path = with/subdir
+    ... """)
+    >>> print system(buildout),
+    data-dir: Cannot create /sample-buildout/with/subdir. /sample-buildout/with is not a directory.
+    ...
+
+But we need to activate this function explicitely.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
+    ...
+    ... [data-dir]
+    ... recipe = lovely.recipe:mkdir
+    ... createpath = True
+    ... path = with/subdir
+    ... """)
+    >>> print system(buildout),
+    Uninstalling data-dir.
+    Installing data-dir.
+    data-dir: Creating directory with/subdir
+
+    >>> ls(sample_buildout)
+    -  .installed.cfg
+    d  bin
+    -  buildout.cfg
+    d  develop-eggs
+    d  eggs
+    d  mystuff
+    d  otherdir
+    d  parts
+    d  with
+    >>> ls(sample_buildout + '/with')
+    d  subdir
+
+
 Creating Files
 ==============
 
@@ -88,6 +136,7 @@ permissions.
     d  mystuff
     d  otherdir
     d  parts
+    d  with
 
 The content is written to the file.
 
@@ -130,4 +179,28 @@ If we change the filename the old file is deleted.
     -  newfile.sh
     d  otherdir
     d  parts
+    d  with
+
+We can also specify to create the path for the file.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = script
+    ...
+    ... [script]
+    ... recipe = lovely.recipe:mkfile
+    ... createpath = On
+    ... path = subdir/for/file/file.sh
+    ... content = hoschi
+    ... mode = 0755
+    ... """)
+    >>> print system(buildout)
+    Uninstalling script.
+    Installing script.
+    script: Creating directory /sample-buildout/subdir/for/file
+    script: Writing file /sample-buildout/subdir/for/file/file.sh
+
+    >>> ls(sample_buildout + '/subdir/for/file')
+    -  file.sh
 
