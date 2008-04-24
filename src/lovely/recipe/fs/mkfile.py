@@ -26,9 +26,11 @@ class Mkfile:
     def install(self):
         path = self.options['path']
         if self.createPath:
-            logging.getLogger(self.name).info(
-                'Creating directory %s', os.path.dirname(self.options['path']))
-            os.makedirs(os.path.dirname(self.options['path']))
+            dirname = os.path.dirname(self.options['path'])
+            if not os.path.isdir(dirname):
+                logging.getLogger(self.name).info(
+                    'Creating directory %s', dirname)
+                os.makedirs(dirname)
         f = file(path, 'w')
         logging.getLogger(self.name).info(
             'Writing file %s', path)
