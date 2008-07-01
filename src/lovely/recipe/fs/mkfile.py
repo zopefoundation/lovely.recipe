@@ -1,7 +1,8 @@
 import os
 import logging
 
-class Mkfile:
+
+class Mkfile(object):
 
     def __init__(self, buildout, name, options):
         self.buildout = buildout
@@ -15,28 +16,26 @@ class Mkfile:
                               self.originalPath,
                               )
         self.createPath = options.get('createpath', 'False').lower() in ['true', 'on', '1']
-        if (    not self.createPath
-            and not os.path.isdir(os.path.dirname(options['path']))
-           ):
-            logging.getLogger(self.name).error(
-                'Cannot create file %s. %s is not a directory.',
-                options['path'], os.path.dirname(options['path']))
-            raise zc.buildout.UserError('Invalid Path')
 
     def install(self):
-        path = self.options['path']
-        if self.createPath:
-            dirname = os.path.dirname(self.options['path'])
-            if not os.path.isdir(dirname):
+        filename = self.options['path']
+        dirname = os.path.dirname(self.options['path'])
+
+        if not os.path.isdir(dirname):
+            if self.createPath:
                 logging.getLogger(self.name).info(
                     'Creating directory %s', dirname)
                 os.makedirs(dirname)
-        f = file(path, 'w')
+            else:
+                logging.getLogger(self.name).error(
+                    'Cannot create file %s. %s is not a directory.',
+                    filename, dirname)
+                raise zc.buildout.UserError('Invalid path')
+
+        f = file(filename, 'w')
         logging.getLogger(self.name).info(
-            'Writing file %s', path)
+            'Writing file %s', filename)
         f.write(self.options['content'])
-
         f.close()
-        os.chmod(path, self.mode)
-        return path
-
+        os.chmod(filename, self.mode)
+        return filename

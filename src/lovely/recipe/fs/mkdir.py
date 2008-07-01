@@ -1,7 +1,9 @@
 import os
 import logging
+import zc.buildout
 
-class Mkdir:
+
+class Mkdir(object):
 
     def __init__(self, buildout, name, options):
         self.buildout = buildout
@@ -13,20 +15,25 @@ class Mkdir:
                               self.originalPath,
                               )
         self.createPath = options.get('createpath', 'False').lower() in ['true', 'on', '1']
-        if (    not self.createPath
-            and not os.path.isdir(os.path.dirname(options['path']))
-           ):
-            logging.getLogger(self.name).error(
-                'Cannot create %s. %s is not a directory.',
-                options['path'], os.path.dirname(options['path']))
-            raise zc.buildout.UserError('Invalid Path')
 
     def install(self):
         path = self.options['path']
-        if not os.path.isdir(path):
-            logging.getLogger(self.name).info(
-                'Creating directory %s', self.originalPath)
-            os.makedirs(path)
+        dirname = os.path.dirname(self.options['path'])
+
+        if not os.path.isdir(dirname):
+            if self.createPath:
+                logging.getLogger(self.name).info(
+                    'Creating parent directory %s', dirname)
+                os.makedirs(dirname)
+            else:
+                logging.getLogger(self.name).error(
+                    'Cannot create %s. %s is not a directory.',
+                    path, dirname)
+                raise zc.buildout.UserError('Invalid Path')
+
+        logging.getLogger(self.name).info(
+            'Creating directory %s', self.originalPath)
+        os.mkdir(path)
         return ()
 
     def update(self):

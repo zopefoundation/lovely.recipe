@@ -6,12 +6,17 @@ After
 =====
 
 BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
-          to show for what this all is for.
+          to show what this all is for.
+
+- Re-arranged the fs recipe code to not check for directory existence during
+  initialisation phase.
+
+- Fixed some test issues.
 
 2008/04/24 0.3.1b4:
 ===================
 
-- fixed os error if a path already esists
+- fixed os error if a path already exists
 
 2008/04/24 0.3.1b3:
 ===================

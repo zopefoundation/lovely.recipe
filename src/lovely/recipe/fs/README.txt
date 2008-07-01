@@ -16,6 +16,8 @@ Creating Directories
     ... path = mystuff
     ... """)
     >>> print system(buildout),
+    Getting distribution for 'ZODB3'.
+    Got ZODB3 3...
     Installing data-dir.
     data-dir: Creating directory mystuff
 
@@ -68,8 +70,12 @@ We can also create a full path.
     ... path = with/subdir
     ... """)
     >>> print system(buildout),
+    Uninstalling data-dir.
+    Installing data-dir.
     data-dir: Cannot create /sample-buildout/with/subdir. /sample-buildout/with is not a directory.
-    ...
+    While:
+      Installing data-dir.
+    Error: Invalid Path
 
 But we need to activate this function explicitely.
 
@@ -85,8 +91,8 @@ But we need to activate this function explicitely.
     ... path = with/subdir
     ... """)
     >>> print system(buildout),
-    Uninstalling data-dir.
     Installing data-dir.
+    data-dir: Creating parent directory /sample-buildout/with
     data-dir: Creating directory with/subdir
 
     >>> ls(sample_buildout)
