@@ -29,7 +29,8 @@ setup (
                         'zope.app.locales',
                         'zc.zope3recipes',
                         'zc.zodbrecipes',
-                        'ZConfig'
+                        'zope.app.locales>=3.4.5',
+                        'ZConfig',
                         ],
     entry_points = entry_points,
     zip_safe = True,

@@ -8,6 +8,12 @@ After
 BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show what this all is for.
 
+- added option extract-html to i18n recipe, i18nextract will then also parse
+  "*.html" files.
+
+2008/06/02 0.3.1b5
+===================
+
 - Re-arranged the fs recipe code to not check for directory existence during
   initialisation phase.
 

@@ -69,6 +69,8 @@ class I18n(object):
                      '-p', self.options['location'],
                      '-o', self.options.get('output', 'locales'),
                     ]
+        if self.options.get('extract-html', False):
+            arguments.append('--html')
         makers = [m for m in self.options.get('maker', '').split() if m!='']
         for m in makers:
             arguments.extend(['-m', m])

@@ -97,7 +97,7 @@ def main(argv=sys.argv):
         opts, args = getopt.getopt(
             argv[1:],
             'hed:s:i:m:p:o:x:',
-            ['help', 'domain=', 'site_zcml=', 'path=', 'python-only'])
+            ['help', 'domain=', 'site_zcml=', 'path=', 'python-only', 'html'])
     except getopt.error, msg:
         usage(1, msg)
 
@@ -107,6 +107,7 @@ def main(argv=sys.argv):
     output_dir = None
     exclude_dirs = []
     python_only = False
+    extract_html = False
     site_zcml = None
     makers = []
     for opt, arg in opts:
@@ -126,6 +127,8 @@ def main(argv=sys.argv):
             exclude_dirs.append(arg)
         elif opt in ('--python-only',):
             python_only = True
+        elif opt in ('--html',):
+            extract_html = True
         elif opt in ('-p', '--path'):
             if not os.path.exists(arg):
                 usage(1, 'The specified path does not exist.')
@@ -158,8 +161,9 @@ def main(argv=sys.argv):
           "include default domain: %r\n" \
           "output file: %r\n" \
           "Python only: %r" \
+          "parse html files: %r" \
           % (base_dir, path, site_zcml, exclude_dirs, domain,
-             include_default_domain, output_file, python_only)
+             include_default_domain, output_file, python_only, extract_html)
 
     from zope.app.locales.extract import POTMaker, \
          py_strings, tal_strings, zcml_strings
@@ -170,6 +174,10 @@ def main(argv=sys.argv):
         maker.add(zcml_strings(path, domain, site_zcml), base_dir)
         maker.add(tal_strings(path, domain, include_default_domain,
                               exclude=exclude_dirs), base_dir)
+        if extract_html:
+            maker.add(tal_strings(path, domain, include_default_domain,
+                                  exclude=exclude_dirs, filePattern='*.html'),
+                      base_dir)
     for m in makers:
         poMaker = resolve(m)
         maker.add(poMaker(path, base_dir, exclude_dirs))

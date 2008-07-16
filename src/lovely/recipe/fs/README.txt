@@ -16,8 +16,6 @@ Creating Directories
     ... path = mystuff
     ... """)
     >>> print system(buildout),
-    Getting distribution for 'ZODB3'.
-    Got ZODB3 3...
     Installing data-dir.
     data-dir: Creating directory mystuff
 
