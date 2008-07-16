@@ -1,0 +1,88 @@
+=========================
+Changes for lovely.recipe
+=========================
+
+After
+=====
+
+BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
+          to show what this all is for.
+
+2008/07/16 0.3.1b6
+==================
+
+- added option extract-html to i18n recipe, i18nextract will then also parse
+  "*.html" files.
+
+2008/06/02 0.3.1b5
+==================
+
+- Re-arranged the fs recipe code to not check for directory existence during
+  initialisation phase.
+
+- Fixed some test issues.
+
+2008/04/24 0.3.1b4:
+===================
+
+- fixed os error if a path already exists
+
+2008/04/24 0.3.1b3:
+===================
+
+- added option "createpath" to mkfile and mkdir recipe
+
+2008/02/24 0.3.1b2:
+===================
+
+- Added ``i18nstats`` as an additional script.
+
+2007/09/21 0.3.1b1:
+===================
+
+- mkdir makes sure directories are never deleted
+
+
+2007/08/31 0.3.1a3:
+===================
+
+- generated script names are created from the section name to allow more than
+  just one extractor in one buildout.
+
+
+2007/08/31 0.3.1a2:
+===================
+
+- merge from lovely-instance branch
+
+- i18nextract allows the definition of a custem configure.zcml which is needed
+  to be able to use it with package who do not contain a full configuration
+  setup.
+
+- fix tests to run not only on jukart's mac
+
+
+2007/06/04 0.3.0a2:
+===================
+
+- recipe for zope instances (instance, app); no tests as well :(
+
+
+2007/06/04 0.3.0a1:
+===================
+
+- recipe for importchecker
+
+
+2007/06/04 0.2.0a1:
+===================
+
+- Recipe for i18nextract and i18nmerge
+- no tests right now because of the complex setup (will come soon)
+
+
+2007/06/04 0.1a1:
+=================
+
+- first release. mkdir and mkfile implemented
+
