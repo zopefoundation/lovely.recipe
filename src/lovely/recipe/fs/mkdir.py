@@ -31,9 +31,10 @@ class Mkdir(object):
                     path, dirname)
                 raise zc.buildout.UserError('Invalid Path')
 
-        logging.getLogger(self.name).info(
-            'Creating directory %s', self.originalPath)
-        os.mkdir(path)
+        if not os.path.isdir(path):
+            logging.getLogger(self.name).info(
+                'Creating directory %s', self.originalPath)
+            os.mkdir(path)
         return ()
 
     def update(self):

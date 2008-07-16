@@ -8,6 +8,11 @@ After
 BIG TODO: add tests for lovely.recipe.zeo and lovely.recipe.zope to test and
           to show what this all is for.
 
+2008/07/16 0.3.1b7
+==================
+
+- make sure we don't fail if the directory to create already exists
+
 2008/07/16 0.3.1b6
 ==================
 
