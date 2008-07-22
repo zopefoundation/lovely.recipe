@@ -13,12 +13,13 @@ server = lovely.recipe.zeo:LovelyServer
 
 setup (
     name='lovely.recipe',
-    version='0.3.1b7',
+    description = "set of helper recipies for zc.buildout",
+    version='0.3.1b8',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
     keywords = "buildout recipe filesystem i18n importchecker",
-    url = 'svn://svn.zope.org/repos/main/lovely.recipe',
+    url = 'http://launchpad.net/lovely.recipe',
     packages = find_packages('src'),
     include_package_data = True,
     package_dir = {'':'src'},
