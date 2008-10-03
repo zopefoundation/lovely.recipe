@@ -9,12 +9,13 @@ importchecker = lovely.recipe.importchecker.app:ImportChecker
 instance = lovely.recipe.zope.zope:LovelyInstance
 app = lovely.recipe.zope.zope:LovelyApp
 server = lovely.recipe.zeo:LovelyServer
+eggbox = lovely.recipe.egg:EggBox
 """
 
 setup (
     name='lovely.recipe',
     description = "set of helper recipies for zc.buildout",
-    version='0.3.1b8',
+    version='1.0.0a1',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
@@ -24,14 +25,15 @@ setup (
     include_package_data = True,
     package_dir = {'':'src'},
     namespace_packages = ['lovely', 'lovely.recipe'],
-    install_requires = ['setuptools',
-                        'zc.buildout',
-                        'zc.recipe.egg',
+    extras_require = dict(zope=[
                         'zope.app.locales',
                         'zc.zope3recipes',
                         'zc.zodbrecipes',
                         'zope.app.locales>=3.4.5',
-                        'ZConfig',
+                        'ZConfig']),
+    install_requires = ['setuptools',
+                        'zc.buildout',
+                        'zc.recipe.egg',
                         ],
     entry_points = entry_points,
     zip_safe = True,
