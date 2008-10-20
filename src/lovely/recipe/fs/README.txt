@@ -107,6 +107,53 @@ But we need to activate this function explicitely.
     d  subdir
 
 
+We can change the owner of the created directory if run as root. This is tested
+in mkdir-root.txt.
+
+If not run as root, setting the owner is an error:
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
+    ...
+    ... [data-dir]
+    ... recipe = lovely.recipe:mkdir
+    ... createpath = True
+    ... path = another/with/subdir
+    ... owner = nobody
+    ... """)
+    >>> print system(buildout),
+    While:
+      Installing.
+      Getting section data-dir.
+      Initializing part data-dir.
+    Error: Only root can change the owner to nobody.
+
+
+It is an error when the user does not exist:
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
+    ...
+    ... [data-dir]
+    ... recipe = lovely.recipe:mkdir
+    ... createpath = True
+    ... path = another/with/subdir
+    ... owner = someuser
+    ... """)
+    >>> print system(buildout),
+    While:
+      Installing.
+      Getting section data-dir.
+      Initializing part data-dir.
+    Error: The user someuser does not exist.
+
+
 Creating Files
 ==============
 

@@ -1,0 +1,37 @@
+Creating Directories with owner change
+======================================
+
+We can change the owner of the created directory if run as root:
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = data-dir
+    ... find-links = http://download.zope.org/distribution
+    ...
+    ... [data-dir]
+    ... recipe = lovely.recipe:mkdir
+    ... createpath = True
+    ... path = with/subdir
+    ... owner = nobody
+    ... """)
+    >>> import os
+    >>> import pwd
+    >>> nobody_uid = pwd.getpwnam('nobody')[2]
+    >>> print system(buildout),
+    Installing data-dir.
+    data-dir: Creating parent directory .../_TEST_/sample-buildout/with
+    data-dir: Creating directory with/subdir
+   
+The owner of the subdir is changed:
+
+    >>> path = os.path.join(sample_buildout, 'with/subdir')
+    >>> os.stat(path).st_uid == nobody_uid
+    True
+
+But not the owner of the parent dir:
+
+    >>> path = os.path.join(sample_buildout, 'with')
+    >>> os.stat(path).st_uid == nobody_uid
+    False
+

@@ -16,6 +16,8 @@ $Id$
 """
 __docformat__ = 'restructuredtext'
 
+import os
+
 from zc.buildout import testing
 import doctest, unittest
 from zope.testing import doctest, renormalizing
@@ -25,9 +27,13 @@ from lovely.recipe.testing import setUpBuildout
 
 def test_suite():
 
+    test_file = 'README.txt'
+    if os.getuid() == 0:
+        test_file = 'mkdir-root.txt'
+
     return unittest.TestSuite((
         doctest.DocFileSuite(
-            'README.txt',
+            test_file,
             setUp=setUpBuildout,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
             tearDown=testing.buildoutTearDown,

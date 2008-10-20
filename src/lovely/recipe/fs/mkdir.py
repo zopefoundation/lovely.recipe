@@ -1,5 +1,6 @@
-import os
 import logging
+import os
+import pwd
 import zc.buildout
 
 
@@ -14,7 +15,21 @@ class Mkdir(object):
                               buildout['buildout']['directory'],
                               self.originalPath,
                               )
-        self.createPath = options.get('createpath', 'False').lower() in ['true', 'on', '1']
+        owner = options.get('owner')
+        if owner:
+            try:
+                uid = pwd.getpwnam(owner)[2]
+            except KeyError:
+                raise zc.buildout.UserError(
+                    'The user %s does not exist.' % owner)
+            if os.getuid() != 0:
+                raise zc.buildout.UserError(
+                    'Only root can change the owner to %s.' % owner)
+
+            options['owner-uid'] = str(uid)
+
+        self.createPath = options.get('createpath', 'False').lower() in [
+            'true', 'on', '1']
 
     def install(self):
         path = self.options['path']
@@ -35,6 +50,10 @@ class Mkdir(object):
             logging.getLogger(self.name).info(
                 'Creating directory %s', self.originalPath)
             os.mkdir(path)
+        uid = self.options.get('owner-uid')
+        if uid is not None:
+            uid = int(uid)
+            os.chown(path, uid, -1)
         return ()
 
     def update(self):
