@@ -10,11 +10,6 @@ class Mkdir(object):
         self.buildout = buildout
         self.name = name
         self.options = options
-        self.originalPath = options['path']
-        options['path'] = os.path.join(
-                              buildout['buildout']['directory'],
-                              self.originalPath,
-                              )
         owner = options.get('owner')
         if owner:
             try:
@@ -48,7 +43,7 @@ class Mkdir(object):
 
         if not os.path.isdir(path):
             logging.getLogger(self.name).info(
-                'Creating directory %s', self.originalPath)
+                'Creating directory %s', self.options['path'])
             os.mkdir(path)
         uid = self.options.get('owner-uid')
         if uid is not None:

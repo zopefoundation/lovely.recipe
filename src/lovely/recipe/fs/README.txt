@@ -13,11 +13,11 @@ Creating Directories
     ...
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
-    ... path = mystuff
+    ... path = ${buildout:directory}/mystuff
     ... """)
     >>> print system(buildout),
     Installing data-dir.
-    data-dir: Creating directory mystuff
+    data-dir: Creating directory /sample-buildout/mystuff
 
     >>> ls(sample_buildout)
     -  .installed.cfg
@@ -38,12 +38,12 @@ If we change the directory name the old directory ('mystuff') is not deleted.
     ...
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
-    ... path = otherdir
+    ... path = ${buildout:directory}/otherdir
     ... """)
     >>> print system(buildout),
     Uninstalling data-dir.
     Installing data-dir.
-    data-dir: Creating directory otherdir
+    data-dir: Creating directory /sample-buildout/otherdir
 
     >>> ls(sample_buildout)
     -  .installed.cfg
@@ -65,7 +65,7 @@ We can also create a full path.
     ...
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
-    ... path = with/subdir
+    ... path = ${buildout:directory}/with/subdir
     ... """)
     >>> print system(buildout),
     Uninstalling data-dir.
@@ -86,12 +86,12 @@ But we need to activate this function explicitely.
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
     ... createpath = True
-    ... path = with/subdir
+    ... path = ${buildout:directory}/with/subdir
     ... """)
     >>> print system(buildout),
     Installing data-dir.
     data-dir: Creating parent directory /sample-buildout/with
-    data-dir: Creating directory with/subdir
+    data-dir: Creating directory /sample-buildout/with/subdir
 
     >>> ls(sample_buildout)
     -  .installed.cfg
@@ -121,7 +121,7 @@ If not run as root, setting the owner is an error:
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
     ... createpath = True
-    ... path = another/with/subdir
+    ... path = ${buildout:directory}/another/with/subdir
     ... owner = nobody
     ... """)
     >>> print system(buildout),
@@ -143,7 +143,7 @@ It is an error when the user does not exist:
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
     ... createpath = True
-    ... path = another/with/subdir
+    ... path = ${buildout:directory}/another/with/subdir
     ... owner = someuser
     ... """)
     >>> print system(buildout),

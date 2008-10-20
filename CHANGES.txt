@@ -16,6 +16,10 @@ After
 
 - Added a way to change the owner of created directories.
 
+- INCOMPATIBLE CHANGE: When creating directories the path used to be
+  automatically joined with the buildout:directory. This was removed in favour
+  of explicit joining in buildout.cfg.
+
 2008/07/16 0.3.1b8
 ==================
 

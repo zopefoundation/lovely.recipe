@@ -12,7 +12,7 @@ We can change the owner of the created directory if run as root:
     ... [data-dir]
     ... recipe = lovely.recipe:mkdir
     ... createpath = True
-    ... path = with/subdir
+    ... path = ${buildout:directory}/with/subdir
     ... owner = nobody
     ... """)
     >>> import os
@@ -20,8 +20,8 @@ We can change the owner of the created directory if run as root:
     >>> nobody_uid = pwd.getpwnam('nobody')[2]
     >>> print system(buildout),
     Installing data-dir.
-    data-dir: Creating parent directory .../_TEST_/sample-buildout/with
-    data-dir: Creating directory with/subdir
+    data-dir: Creating parent directory /sample-buildout/with
+    data-dir: Creating directory /sample-buildout/with/subdir
    
 The owner of the subdir is changed:
 
