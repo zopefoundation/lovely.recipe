@@ -67,7 +67,9 @@ class ImportFinder:
     def visitFrom(self, stmt):
         """Will be called for 'from foo import bar' statements
         """
-        module_name, names = stmt.asList()
+        x = stmt.asList()
+        module_name = x[0]
+        names = x[1]
         if module_name == '__future__':
             # we don't care what's imported from the future
             return
@@ -351,4 +353,3 @@ def main(argv = sys.argv):
 
 if __name__ == '__main__':
     main()
-
