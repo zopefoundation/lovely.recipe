@@ -6,6 +6,8 @@ def setUpBuildout(test):
     testing.install_develop('zc.recipe.egg', test)
     testing.install_develop('zc.zodbrecipes', test)
     testing.install_develop('zc.zope3recipes', test)
+    testing.install_develop('zc.lockfile', test)
+    testing.install_develop('transaction', test)
     testing.install_develop('lovely.recipe', test)
     testing.install_develop('ZODB3', test)
     testing.install_develop('docutils', test)
