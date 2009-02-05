@@ -2,13 +2,16 @@
 Changes for lovely.recipe
 =========================
 
-After
-=====
+2009/02/05 1.0.0b1
+==================
 
 - do the same upon install in update, to recreate directories in
   mkdir. fixes https://bugs.launchpad.net/lovely.recipe/+bug/322275
 
 - added the variation option to the mkfile recipe
+
+2008/10/03 1.0.0a1
+==================
 
 - added the lovely.recipe:eggbox recipe
 
