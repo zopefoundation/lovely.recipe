@@ -5,7 +5,12 @@ Changes for lovely.recipe
 After
 =====
 
-- added the lovely.recipe:eggbox recipe 
+- do the same upon install in update, to recreate directories in
+  mkdir. fixes https://bugs.launchpad.net/lovely.recipe/+bug/322275
+
+- added the variation option to the mkfile recipe
+
+- added the lovely.recipe:eggbox recipe
 
 - INCOMPATIBLE CHANGE: moved zope recipies into an extra called "zope"
   this requires one to write the extra in the recipe declaraion like

@@ -51,6 +51,3 @@ class Mkdir(object):
             os.chown(path, uid, -1)
         return ()
 
-    def update(self):
-        pass
-

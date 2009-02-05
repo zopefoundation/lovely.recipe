@@ -106,6 +106,15 @@ But we need to activate this function explicitely.
     >>> ls(sample_buildout + '/with')
     d  subdir
 
+There is no update method so the install method is used upon update
+and the directories get recreated.
+
+    >>> rmdir(sample_buildout + '/with')
+    >>> print system(buildout),
+    Updating data-dir.
+    The recipe for data-dir doesn't define an update method. Using its install method.
+    data-dir: Creating parent directory /sample-buildout/with
+    data-dir: Creating directory /sample-buildout/with/subdir
 
 We can change the owner of the created directory if run as root. This is tested
 in mkdir-root.txt.
@@ -157,7 +166,7 @@ It is an error when the user does not exist:
 Creating Files
 ==============
 
-The mkfile recipe creates a file with a given path, content and
+The mkfile recipe creates one or more files with a given path, content and
 permissions.
 
     >>> write(sample_buildout, 'buildout.cfg',
@@ -255,3 +264,34 @@ We can also specify to create the path for the file.
     >>> ls(sample_buildout + '/subdir/for/file')
     -  file.sh
 
+
+File Variations
+---------------
+
+A common use-case is to have variations of a file, for example if init
+scripts have to be created. As an example we create two files with
+variations "1" and "2". These variations can be used in the file path
+and in the content of the file via normal string formatting notation.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = script
+    ...
+    ... [script]
+    ... recipe = lovely.recipe:mkfile
+    ... variations = 1 2
+    ... path = prod_%(variation)s.ini
+    ... content = hoschi variation %(variation)s
+    ... mode = 0755
+    ... """)
+    >>> print system(buildout)
+    Uninstalling script.
+    Installing script.
+    script: Writing file ...sample-buildout/prod_1.ini
+    script: Writing file ...sample-buildout/prod_2.ini
+
+    >>> cat(sample_buildout, 'prod_1.ini')
+    hoschi variation 1
+    >>> cat(sample_buildout, 'prod_2.ini')
+    hoschi variation 2

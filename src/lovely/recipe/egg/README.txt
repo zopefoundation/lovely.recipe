@@ -23,6 +23,7 @@ use the recipe.
     ...        pytz
     ... """)
     >>> print system(buildout),
+    Getting...
     Installing packages.
 
 We now have a zip file for each top-level directory. Note that the
@@ -30,17 +31,7 @@ zip-files are ending with .egg for pkg_resources compatibility.
 
     >>> ls(sample_buildout + '/parts/packages')
     -  BTrees.egg
-    -  RestrictedPython.egg
-    -  ThreadedAsync.egg
-    -  ZConfig.egg
-    -  ZEO.egg
-    -  ZODB.egg
-    -  ZopeUndo.egg
-    -  persistent.egg
-    -  pytz.egg
-    -  transaction.egg
-    -  zdaemon.egg
-    -  zodbcode.egg
+    -  RestrictedPython.egg...
     -  zope.egg
 
 It is possible to disable zipping. And also to exclude or include
