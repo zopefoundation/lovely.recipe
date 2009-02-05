@@ -5,7 +5,7 @@ Changes for lovely.recipe
 After
 =====
 
-- added the lovely.recipe:eggbox recipe
+- added the lovely.recipe:eggbox recipe 
 
 - INCOMPATIBLE CHANGE: moved zope recipies into an extra called "zope"
   this requires one to write the extra in the recipe declaraion like
