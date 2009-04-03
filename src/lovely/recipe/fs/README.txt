@@ -169,6 +169,28 @@ Creating Files
 The mkfile recipe creates one or more files with a given path, content and
 permissions.
 
+Note that the parent directory needs to exist, otherwise a user error
+is raised.
+
+    >>> write(sample_buildout, 'buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = script
+    ...
+    ... [script]
+    ... recipe = lovely.recipe:mkfile
+    ... path = /x/y/file.sh
+    ... content = hoschi
+    ... mode = 0755
+    ... """)
+    >>> print system(buildout)
+    Uninstalling data-dir.
+    Installing script.
+    script: Cannot create file /x/y/file.sh. /x/y is not a directory.
+    While:
+      Installing script.
+    Error: Invalid path
+
     >>> write(sample_buildout, 'buildout.cfg',
     ... """
     ... [buildout]
@@ -181,7 +203,6 @@ permissions.
     ... mode = 0755
     ... """)
     >>> print system(buildout)
-    Uninstalling data-dir.
     Installing script.
     script: Writing file /sample-buildout/file.sh
     <BLANKLINE>

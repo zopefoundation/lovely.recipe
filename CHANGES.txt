@@ -2,6 +2,13 @@
 Changes for lovely.recipe
 =========================
 
+2009/04/03 1.0.0b2
+==================
+
+- added missing import in mkfile recipe
+
+- fix test setup
+
 2009/02/05 1.0.0b1
 ==================
 

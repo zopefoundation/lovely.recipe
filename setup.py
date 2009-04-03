@@ -15,7 +15,7 @@ eggbox = lovely.recipe.egg:EggBox
 setup (
     name='lovely.recipe',
     description = "set of helper recipies for zc.buildout",
-    version='1.0.0b1',
+    version='1.0.0b2',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",

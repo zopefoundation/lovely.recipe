@@ -1,6 +1,6 @@
 import os
 import logging
-
+import zc.buildout
 
 class Mkfile(object):
 
