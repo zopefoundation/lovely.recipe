@@ -2,6 +2,12 @@
 Changes for lovely.recipe
 =========================
 
+2009/04/14 1.0.0b3
+==================
+
+ - do not use -U for msgmerge because it doesn't work on MAC and verion 0.17
+   of msgmerge.
+
 2009/04/03 1.0.0b2
 ==================
 

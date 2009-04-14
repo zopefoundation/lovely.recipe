@@ -59,7 +59,8 @@ def merge(path):
                 pot_path = os.path.join(path, domain_file+'t')
                 domain = domain_file.split('.')[0]
                 print 'Merging language "%s", domain "%s"' %(language, domain)
-                os.system('msgmerge -U %s %s' %(domain_path, pot_path))
+                os.system('msgmerge %s %s -o %s' %(
+                                        domain_path, pot_path, domain_path))
 
 
 def main(argv=sys.argv):
