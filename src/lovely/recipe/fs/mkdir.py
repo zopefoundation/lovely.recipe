@@ -1,6 +1,13 @@
 import logging
 import os
-import pwd
+import sys
+
+is_win32 = sys.platform == 'win32'
+
+if not is_win32:
+    import pwd
+    #win32 does not have pwd
+
 import zc.buildout
 
 
@@ -12,16 +19,19 @@ class Mkdir(object):
         self.options = options
         owner = options.get('owner')
         if owner:
-            try:
-                uid = pwd.getpwnam(owner)[2]
-            except KeyError:
-                raise zc.buildout.UserError(
-                    'The user %s does not exist.' % owner)
-            if os.getuid() != 0:
-                raise zc.buildout.UserError(
-                    'Only root can change the owner to %s.' % owner)
+            if is_win32:
+                logging.getLogger(self.name).info( 'Cannot set owner on win32!')
+            else:
+                try:
+                    uid = pwd.getpwnam(owner)[2]
+                except KeyError:
+                    raise zc.buildout.UserError(
+                        'The user %s does not exist.' % owner)
+                if os.getuid() != 0:
+                    raise zc.buildout.UserError(
+                        'Only root can change the owner to %s.' % owner)
 
-            options['owner-uid'] = str(uid)
+                options['owner-uid'] = str(uid)
 
         self.createPath = options.get('createpath', 'False').lower() in [
             'true', 'on', '1']
@@ -50,4 +60,3 @@ class Mkdir(object):
             uid = int(uid)
             os.chown(path, uid, -1)
         return ()
-

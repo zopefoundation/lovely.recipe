@@ -17,6 +17,7 @@ $Id$
 __docformat__ = 'restructuredtext'
 
 import os
+import sys
 
 from zc.buildout import testing
 import doctest, unittest
@@ -24,11 +25,12 @@ from zope.testing import doctest, renormalizing
 
 from lovely.recipe.testing import setUpBuildout
 
+is_win32 = sys.platform == 'win32'
 
 def test_suite():
 
     test_file = 'README.txt'
-    if os.getuid() == 0:
+    if not is_win32 and os.getuid() == 0:
         test_file = 'mkdir-root.txt'
 
     return unittest.TestSuite((
@@ -42,4 +44,3 @@ def test_suite():
                                     testing.normalize_script,
                                     testing.normalize_egg_py])
             )))
-
