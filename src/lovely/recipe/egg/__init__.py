@@ -37,7 +37,6 @@ class EggBox(zc.recipe.egg.Scripts):
         def _pf(src, dst, packages=packages, includes=self.includes,
                 excludes=self.excludes):
             for pat in includes:
-                import pdb;pdb.set_trace()
                 if not pat.match(src):
                     return None
             for pat in excludes:
