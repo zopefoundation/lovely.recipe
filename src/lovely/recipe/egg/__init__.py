@@ -1,9 +1,12 @@
 import logging, os
-import zc.recipe.egg
-import shutil
 import re
+import shutil
+
 import pkg_resources
-from zc.buildout.easy_install import _script
+
+import zc.recipe.egg
+from zc.buildout.easy_install import _script, _pyscript, _relative_path_and_setup
+
 
 log = logging.getLogger(__name__)
 
@@ -20,10 +23,19 @@ class EggBox(zc.recipe.egg.Scripts):
     def __init__(self, buildout, name, options):
         options['parts-directory'] = buildout['buildout']['parts-directory']
         super(EggBox, self).__init__(buildout, name, options)
+
+        develop = self.buildout['buildout'].get('develop', [])
+        self.develop_paths = []
+        if develop:
+            for setup in develop.split():
+                self.develop_paths.append(
+                    os.path.normpath(self.buildout._buildout_path(setup)))
+
         # we need to do this on init because the signature cannot be
         # created if the egg is not already there
         self.ws = self.working_set()[1]
         self.zip = self.options.get('zip') != 'False'
+
         self.location = self.options.get(
             'location',
             os.path.join(self.options['parts-directory'], self.name))
@@ -31,6 +43,7 @@ class EggBox(zc.recipe.egg.Scripts):
             self.includes += map(re.compile, options.get('includes').strip().split())
         if options.get('excludes'):
             self.excludes += map(re.compile, options.get('excludes').strip().split())
+
         self._mk_zips()
 
     def progress_filter(self, packages):
@@ -85,8 +98,12 @@ class EggBox(zc.recipe.egg.Scripts):
             shutil.rmtree(self.location)
         os.mkdir(self.location)
         dsts = []
+        path = []
         for src, names in self.ws.entry_keys.items():
             if self.src_exclude.match(src):
+                continue
+            if not self.zip and filter(src.startswith, self.develop_paths):
+                path.append(src)
                 continue
             log.debug("Adding archive %r %r" % (src, names))
             archive_util.unpack_archive(
@@ -114,7 +131,6 @@ class EggBox(zc.recipe.egg.Scripts):
                 z = os.path.join(self.location, name + '.egg')
                 make_zipfile(z, d)
                 shutil.rmtree(d)
-        path = []
         for name in os.listdir(self.location):
             path.append(os.path.join(self.location, name))
         self.options['path'] = '\n'.join(path)
@@ -126,7 +142,10 @@ class EggBox(zc.recipe.egg.Scripts):
                 arguments='',
                 interpreter=None,
                 initialization='',
+                relative_paths=False,
                 ):
+
+        path = [dist.location for dist in working_set]
         path = list(self.path)
         path.extend(extra_paths)
         path = repr(path)[1:-1].replace(', ', ',\n  ')
@@ -166,9 +185,9 @@ class EggBox(zc.recipe.egg.Scripts):
                 _script(module_name, attrs, path, sname, executable, arguments,
                         initialization)
                 )
-
         if interpreter:
             sname = os.path.join(dest, interpreter)
-            generated.extend(_pyscript(path, sname, executable))
+            spath, rpsetup = _relative_path_and_setup(sname, path, relative_paths)
+            generated.extend(_pyscript(path, sname, executable, rpsetup))
 
         return generated

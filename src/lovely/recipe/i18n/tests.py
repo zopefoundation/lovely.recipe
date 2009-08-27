@@ -16,17 +16,20 @@ $Id$
 """
 __docformat__ = 'restructuredtext'
 
-from zc.buildout import testing
-import doctest, unittest
+import unittest
 from zope.testing import doctest, renormalizing
-
 from lovely.recipe.testing import setUpBuildout
+from zc.buildout import testing
 
+def setUp(test):
+    setUpBuildout(test)
+    testing.install_develop('zope.app.locales', test)
+    testing.install_develop('zope.i18nmessageid', test)
 
 def test_suite():
     return unittest.TestSuite((
         doctest.DocFileSuite('README.txt',
-                             setUp=setUpBuildout,
+                             setUp=setUp,
                              tearDown=testing.buildoutTearDown,
                              optionflags=doctest.ELLIPSIS,
                              checker=renormalizing.RENormalizing([

@@ -17,11 +17,6 @@ $Id$
 __docformat__ = 'restructuredtext'
 
 import socket
-import cStringIO
-import os, shutil
-import zc.buildout
-import zc.recipe.egg
-
 from lovely.recipe import TemplatedRecipe
 
 from zc.zodbrecipes import StorageServer

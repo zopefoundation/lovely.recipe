@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
+import os
+
 entry_points = """
 [zc.buildout]
 mkdir = lovely.recipe.fs.mkdir:Mkdir
@@ -12,10 +14,31 @@ server = lovely.recipe.zeo:LovelyServer
 eggbox = lovely.recipe.egg:EggBox
 """
 
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+long_description=(
+        'Lovely Recipes\n'
+        '**************\n'
+        + '\n' +
+        read('src', 'lovely', 'recipe', 'fs', 'README.txt')
+        + '\n' +
+        read('src', 'lovely', 'recipe', 'egg', 'README.txt')
+        + '\n' +
+        read('src', 'lovely', 'recipe', 'i18n', 'README.txt')
+        + '\n' +
+        read('src', 'lovely', 'recipe', 'importchecker', 'README.txt')
+        + '\n'
+        )
+
+open('doc.txt', 'w').write(long_description)
+
+
 setup (
     name='lovely.recipe',
-    description = "set of helper recipies for zc.buildout",
-    version='1.0.0b5',
+    description = "Set of helper recipies for zc.buildout",
+    long_description = long_description,
+    version='1.0.0b6',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
@@ -26,7 +49,6 @@ setup (
     package_dir = {'':'src'},
     namespace_packages = ['lovely', 'lovely.recipe'],
     extras_require = dict(zope=[
-                        'zope.app.locales',
                         'zope.error',
                         'zc.zope3recipes',
                         'zc.zodbrecipes',

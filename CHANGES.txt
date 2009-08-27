@@ -2,6 +2,22 @@
 Changes for lovely.recipe
 =========================
 
+2009/08/27 1.0.0b6
+==================
+
+ - removed unused dependencies in setup.py
+
+ - generate doc from readmes and use it as long_description in setup,
+   a doc.txt file is generated when setup.py gets executed. this
+   method is taken from zc.buildout's setup.py.
+
+ - lovely.recipe.eggbox does not copy contents of develop eggs anymore
+   if zip is off (better for development).
+
+ - fixed interpreter option in lovely.recipe.eggbox
+
+ - cleaned up test setup and imports
+
 2009/06/18 1.0.0b5
 ==================
 

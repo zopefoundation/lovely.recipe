@@ -16,7 +16,6 @@ $Id$
 """
 __docformat__ = 'restructuredtext'
 
-import os
 import logging
 
 import zc.buildout

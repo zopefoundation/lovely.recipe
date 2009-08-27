@@ -20,7 +20,6 @@ import socket
 import cStringIO
 import os, shutil
 import zc.buildout
-import zc.recipe.egg
 import ZConfig.cfgparser
 from zc.zope3recipes.recipes import (Instance,
                                      App,

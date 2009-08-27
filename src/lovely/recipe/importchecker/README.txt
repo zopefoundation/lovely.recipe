@@ -1,12 +1,12 @@
-=================
-i18n Tools Recipe
-=================
+====================
+Importchecker Recipe
+====================
 
 This recipe creates an importchecker instance in the bin directory.
 
 
-Creating The Tools
-==================
+Creating The Script
+===================
 
     >>> write(sample_buildout, 'buildout.cfg',
     ... """
