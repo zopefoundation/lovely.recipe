@@ -21,14 +21,18 @@ import doctest, unittest
 from zope.testing import doctest, renormalizing
 
 from lovely.recipe.testing import setUpBuildout
+import zc.buildout.tests
 
+def setUp(test):
+    setUpBuildout(test)
+    zc.buildout.tests.easy_install_SetUp(test)
 
 def test_suite():
 
     return unittest.TestSuite((
         doctest.DocFileSuite(
             'README.txt',
-            setUp=setUpBuildout,
+            setUp=setUp,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
             tearDown=testing.buildoutTearDown,
             checker=renormalizing.RENormalizing([

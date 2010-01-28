@@ -179,11 +179,11 @@ class EggBox(zc.recipe.egg.Scripts):
                     continue
             else:
                 sname = name
-
             sname = os.path.join(dest, sname)
+            spath, rpsetup = _relative_path_and_setup(sname, path, relative_paths)
             generated.extend(
                 _script(module_name, attrs, path, sname, executable, arguments,
-                        initialization)
+                        initialization, rpsetup)
                 )
         if interpreter:
             sname = os.path.join(dest, interpreter)
