@@ -2,8 +2,8 @@
 Changes for lovely.recipe
 =========================
 
-trunk
-=====
+2010/01/28 1.0.0
+================
 
  - fixed script generation in eggbox recipe, thanks to Jens Klein for
    reporting this.

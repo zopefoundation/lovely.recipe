@@ -38,7 +38,7 @@ setup (
     name='lovely.recipe',
     description = "Set of helper recipies for zc.buildout",
     long_description = long_description,
-    version='1.0.0b6',
+    version='1.0.0',
     author = "Lovely Systems",
     author_email = "office@lovelysystems.com",
     license = "ZPL 2.1",
